@@ -6,10 +6,10 @@
   var NFL = {};
 
   // ---- settings you edit after the Tableau dashboard is live -------------------
-  NFL.AUTHOR = 'Your Name';                      // shown under the title on the report
+  NFL.AUTHOR = 'Lilly Jo Butler';                      // shown under the title on the report
   NFL.TABLEAU_URL = '';                          // paste the Tableau Public link here
   NFL.TABLEAU_NUMBERS = {                        // paste the four numbers shown in Tableau (as displayed)
-    games: '', underdog: '', home: '', miss: ''
+    games: '5,586', underdog: '51.0%', home: '48.6%', miss: '10.1'
   };
 
   // ---- loading ------------------------------------------------------------------
@@ -27,7 +27,7 @@
     return rows;
   };
   NFL.load = function () {
-    return fetch('data/nfl_team_games.csv').then(function (r) {
+    return fetch('nfl_team_games.csv').then(function (r) {
       if (!r.ok) throw new Error('Could not load data/nfl_team_games.csv (' + r.status + ')');
       return r.text();
     }).then(NFL.parseCSV);
