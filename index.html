@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do NFL teams beat the spread? Report</title>
+<meta name="description" content="Which NFL teams beat the point spread most often from 2015 to 2025, and does it carry over to the next season?">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="index.html">NFL Spread Report</a>
+    <a class="link" href="index.html" aria-current="page">Report</a>
+    <a class="link" href="dashboard.html">Dashboard</a>
+    <span class="spacer"></span>
+    <button id="theme-toggle" type="button">Dark mode</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero">
+    <h1>Which NFL teams beat the point spread most often, and does it carry over to the next season?</h1>
+    <p class="byline"><strong>Rows counted:</strong> one team in one regular-season game, 2015&ndash;2025 seasons<br>
+      By <span id="author">Your Name</span></p>
+    <p class="small"><strong>Reader:</strong> a sportsbook risk manager deciding which teams&rsquo; lines need extra scrutiny.</p>
+    <p class="answer" id="answer" aria-live="polite">Loading the data&hellip;</p>
+  </header>
+
+  <section aria-label="Summary numbers">
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <div id="findings"></div>
+
+  <section class="closing" id="about">
+    <h2>About the data</h2>
+    <h3>Where the data come from</h3>
+    <p>The files are the Kaggle dataset &ldquo;NFL scores and betting data&rdquo; (<code>spreadspoke_scores.csv</code> and the team lookup <code>nfl_teams.csv</code>), one row per game from 1966 through the 2025 season. The scores, dates, and point spreads are as posted in that file. The file does not say whether a spread is an opening or a closing line, so the results describe the spread as recorded there. The original files are in <code>data/source/</code> and <code>build_data.py</code> turns them into the data file this site loads.</p>
+    <h3>What one row is</h3>
+    <p>One row is one team in one regular-season game (<code>data/nfl_team_games.csv</code>). Each game therefore appears twice, once for each team, with that team&rsquo;s score, opponent, role (favorite or underdog), site (home, away, or neutral), and its own point spread (negative for the favorite, positive for the underdog). The team column is the franchise, so the Oakland, Las Vegas, San Diego, Los Angeles, St. Louis, and Washington names are each one team. A team <em>covers</em> when its final margin plus its spread is above zero.</p>
+    <h3>Rows dropped, and why</h3>
+    <ul>
+      <li><strong>Seasons before 2015:</strong> outside the period of the question.</li>
+      <li><strong>Playoff games (133 games in 2015&ndash;2025):</strong> the question is about regular-season lines, and playoff teams are a selected group.</li>
+      <li><strong>Pick&rsquo;em games (11 games):</strong> the spread is zero and no team is the favorite, so favorite and underdog cannot be defined.</li>
+      <li><strong>Pushes (91 games, 182 rows):</strong> the final margin equals the spread exactly, so neither team covered.</li>
+      <li><strong>Missing spreads:</strong> none in the period, so none dropped.</li>
+    </ul>
+    <p>That leaves 2,793 games and 5,586 team-games. Neutral-site games (47 games, 94 rows) stay in the data and count everywhere except in the home cover rate.</p>
+    <h3>How each summary number is computed</h3>
+    <ul>
+      <li><strong>Team-games counted:</strong> the number of rows in the current view.</li>
+      <li><strong>Underdog cover rate:</strong> among rows where the team is the underdog, the share with <em>covered</em> = 1.</li>
+      <li><strong>Home cover rate:</strong> among rows where the site is Home, the share with <em>covered</em> = 1. Because every game has one cover and one non-cover, the favorite and away rates are the mirror images of these two.</li>
+      <li><strong>Average miss vs. spread:</strong> the average of <em>spread miss</em> = |final margin + team spread|, in points, over all rows in the view.</li>
+    </ul>
+    <p>The persistence chart uses each team-season (one team in one season) that has at least 5 games in the view, and pairs it with the same team&rsquo;s next season. Chance ranges are 95% ranges, p &plusmn; 1.96&radic;(p(1&minus;p)/n). This is analysis of past results, not betting advice.</p>
+
+    <h3 id="agree-h">Do the two builds agree?</h3>
+    <p class="small">Website column: all rows, 2015&ndash;2025, every filter at its default. Tableau column: the same view in the Tableau Public dashboard.</p>
+    <div id="agree"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+<script src="charts.js"></script>
+<script src="report.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Do NFL teams beat the spread? Dashboard</title>
+<meta name="description" content="Interactive dashboard: NFL team cover rates against the point spread, 2015 to 2025, with filters for season, team, role, and site.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="index.html">NFL Spread Report</a>
+    <a class="link" href="index.html">Report</a>
+    <a class="link" href="dashboard.html" aria-current="page">Dashboard</a>
+    <span class="spacer"></span>
+    <button id="theme-toggle" type="button">Dark mode</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <h1 style="margin-top:28px">Which NFL teams beat the point spread, and does it last?</h1>
+  <p class="viewline">One row is one team in one regular-season game. Every number below uses the rows left after your filters.</p>
+
+  <form class="filters" id="filters" aria-label="Filters" onsubmit="return false">
+    <label>Season from <select id="f-from"></select></label>
+    <label>Season to <select id="f-to"></select></label>
+    <label>Team <select id="f-team"></select></label>
+    <label>Role <select id="f-role"><option value="All">All</option><option>Favorite</option><option>Underdog</option></select></label>
+    <label>Site <select id="f-site"><option value="All">All</option><option>Home</option><option>Away</option><option>Neutral</option></select></label>
+    <label>Measure <select id="f-measure"><option value="rate">Cover rate</option><option value="miss">Average miss (points)</option></select></label>
+    <button type="button" id="reset">Reset filters</button>
+  </form>
+  <p class="viewline" id="viewline" aria-live="polite"></p>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="dash-grid">
+    <div class="chart" id="c-team"></div>
+  </div>
+  <div class="dash-grid">
+    <div class="chart" id="c-season"></div>
+    <div class="chart" id="c-group"></div>
+  </div>
+  <div class="dash-grid">
+    <div class="chart" id="c-persist"></div>
+  </div>
+
+  <h2>The numbers behind the current view</h2>
+  <div class="scroll" id="table"></div>
+  <p class="footer">Data: Kaggle &ldquo;NFL scores and betting data&rdquo;, reshaped to one row per team per game (see the <a href="index.html#about">report</a> for definitions and dropped rows). Calculations run in your browser.</p>
+</main>
+
+<script src="app.js"></script>
+<script src="charts.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
